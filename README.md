@@ -25,12 +25,9 @@ test/
 npm install
 npm start
 npm test
-npm run test:all
 ```
-
+`npm start` runs the code and prints the ledger.
 `npm test` runs the normal tests.
-
-`npm run test:all` also runs the deliberately failing test that documents the other possible interpretation of E7.
 
 ## How it works
 
