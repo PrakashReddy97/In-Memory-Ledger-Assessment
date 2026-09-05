@@ -102,7 +102,7 @@ export class LedgerEngine {
     }
 
     if (event.type === "SETTLEMENT") {
-      const ok = this.ledger.settle({
+      const failure = this.ledger.settle({
         accountId: event.accountId,
         authId: event.authId,
         amount,
@@ -110,12 +110,17 @@ export class LedgerEngine {
         day: event.day,
         valueDate: event.valueDate,
       });
-      if (!ok) {
+      if (failure) {
+        const messages = {
+          unknown: `Unknown authorization: ${event.authId}`,
+          "not-active": `Authorization ${event.authId} is not active`,
+          "exceeds-hold": `Settlement exceeds remaining hold for ${event.authId}`,
+        };
         this.errors.push({
           accountId: event.accountId,
           day: event.day,
           eventId: event.id,
-          message: `Unknown authorization: ${event.authId}`,
+          message: messages[failure],
         });
       } else {
         this.decisions.push({

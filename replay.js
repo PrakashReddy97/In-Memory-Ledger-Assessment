@@ -116,4 +116,9 @@ export function printReport(engine) {
   );
 }
 
-printReport(buildEngine());
+// Only print when this file is run directly (`node replay.js`), not when
+// the tests import buildEngine/printReport - otherwise `npm test` prints
+// the whole report as a side effect of loading the module.
+if (import.meta.url === `file://${process.argv[1]}`) {
+  printReport(buildEngine());
+}

@@ -14,3 +14,6 @@
 
 5. “Discard any rounding remainder when capitalizing interest.”
    I would reject this. The Day 6 interest entry should match the sum of the rounded daily interest amounts exactly.
+
+6. “Each of the three BHD instalments in E10 must be 3.334.”
+   I would reject this. 3.334 x 3 = 10.002, which is more than the BHD 10.000 being credited. The instalments have to sum to exactly 10.000, so I split it 3.333 / 3.333 / 3.334 (the leftover 0.001 goes to the last instalment) instead of three equal amounts.

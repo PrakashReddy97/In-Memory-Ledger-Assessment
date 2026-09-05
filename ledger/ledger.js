@@ -77,12 +77,16 @@ export class Ledger {
     };
   }
 
+  // Returns null on success, or a reason string on failure. Every invalid
+  // settlement is a rejected event, not a thrown exception - a settlement
+  // exceeding the remaining hold is just as invalid as one referencing an
+  // unknown authorization, and neither should crash the replay.
   settle({ accountId, authId, amount, eventId, day, valueDate }) {
     const account = this.account(accountId);
     const auth = account.authorizations.get(authId);
-    if (!auth || auth.status !== AuthStatus.APPROVED) return false;
-    if (amount > auth.remainingHold)
-      throw new Error(`Settlement exceeds remaining hold for ${authId}`);
+    if (!auth) return "unknown";
+    if (auth.status !== AuthStatus.APPROVED) return "not-active";
+    if (amount > auth.remainingHold) return "exceeds-hold";
 
     this.post({
       id: eventId,
@@ -93,15 +97,10 @@ export class Ledger {
       bookedDay: day,
     });
     auth.settledAmount += amount;
-    auth.remainingHold -= amount;
-
-    if (auth.remainingHold === 0) {
-      auth.status = AuthStatus.SETTLED;
-    } else {
-      // Assessment simplification: unused part of a partially settled hold is released.
-      auth.remainingHold = 0;
-      auth.status = AuthStatus.SETTLED;
-    }
-    return true;
+    // Assessment simplification: any unused part of the hold is released
+    // once a settlement is applied, whether it was full or partial.
+    auth.remainingHold = 0;
+    auth.status = AuthStatus.SETTLED;
+    return null;
   }
 }
