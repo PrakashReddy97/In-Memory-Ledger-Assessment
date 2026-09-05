@@ -2,8 +2,6 @@
 
 This is my implementation of the account ledger assessment.
 
-I kept the code intentionally small so that the main flow is easy to follow and explain during the live defense.
-
 ## Project structure
 
 ```text
