@@ -1,0 +1,16 @@
+{
+  "name": "in-memory-ledger",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node replay.js",
+    "test": "mocha \"test/**/*.test.js\""
+  },
+  "devDependencies": {
+    "chai": "^4.5.0",
+    "mocha": "^11.7.1",
+    "sinon": "^19.0.0"
+  }
+}
