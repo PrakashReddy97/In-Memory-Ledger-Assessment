@@ -2,8 +2,6 @@
 
 This is my implementation of the account ledger assessment.
 
-I kept the code intentionally small so that the main flow is easy to follow and explain during the live defense.
-
 ## Project structure
 
 ```text
@@ -27,12 +25,9 @@ test/
 npm install
 npm start
 npm test
-npm run test:all
 ```
-
+`npm start` runs the code and prints the ledger.
 `npm test` runs the normal tests.
-
-`npm run test:all` also runs the deliberately failing test that documents the other possible interpretation of E7.
 
 ## How it works
 
